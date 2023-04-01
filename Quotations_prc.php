@@ -1,6 +1,7 @@
 <?php
 
 require_once( 'database_conn.php' );
+require_once( 'C:\xampp\htdocs\FindX project\TCPDF-main\TCPDF-main\tcpdf.php' );
 
 $cover = $_POST[ 'covers' ];
 
@@ -66,9 +67,7 @@ $_Covers_cal = $count*0.2;
 #Final Premium
 $F_premium = ( $Market_value_cal*$Year_cal*$Usage_cal*$_Covers_cal )+$tpty_cal;
 
-
-
-if ($cover == ''or $Market_value == ''or $Vehicle_number == ''or $Brand == ''or $Model == ''or $YOM == ''or $tpty == ''or $usage == '' ) {
+if ( $cover == ''or $Market_value == ''or $Vehicle_number == ''or $Brand == ''or $Model == ''or $YOM == ''or $tpty == ''or $usage == '' ) {
 
     header( 'location:Quotations.php?msg=Please Fill All Fields' );
 
@@ -78,7 +77,41 @@ if ($cover == ''or $Market_value == ''or $Vehicle_number == ''or $Brand == ''or 
 
     if ( $database_connection->query( $sql_query ) === TRUE ) {
 
-        header( 'location:Quotations.php?msg=Data Added' );
+       
+        // Create new PDF document
+        $pdf = new TCPDF( PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false );
+
+        // Set document metadata
+        $pdf->SetCreator( 'Your Name' );
+        $pdf->SetAuthor( 'Your Name' );
+        $pdf->SetTitle( 'Quotation' );
+
+        // Add a page to the document
+        $pdf->AddPage();
+
+        // Add content to the document
+        $pdf->SetFont( 'times', '', 12 );
+        $pdf->Write( 0, 'Vehicle Number: '.$Vehicle_number );
+        $pdf->Ln();
+        $pdf->Write( 0, 'Brand: '.$Brand );
+        $pdf->Ln();
+        $pdf->Write( 0, 'Model: '.$Model );
+        $pdf->Ln();
+        $pdf->Write( 0, 'Year of Manufacture: '.$YOM );
+        $pdf->Ln();
+        $pdf->Write( 0, 'Market Value: '.$Market_value );
+        $pdf->Ln();
+        $pdf->Write( 0, 'Third Party Liability: '.$tpty );
+        $pdf->Ln();
+        $pdf->Write( 0, 'Usage: '.$usage );
+        $pdf->Ln();
+        $pdf->Write( 0, 'Covers: '.$cover_value );
+        $pdf->Ln();
+        $pdf->Write( 0, 'Premium: '.$F_premium );
+        $pdf->Ln();
+        
+        // Output the PDF file
+        $pdf->Output( 'quotation.pdf', 'I' );
 
     } else {
 
