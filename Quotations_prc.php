@@ -3,6 +3,29 @@
 require_once( 'database_conn.php' );
 require_once( 'C:\xampp\htdocs\FindX project\TCPDF-main\TCPDF-main\tcpdf.php' );
 
+if (isset($_COOKIE['user_id'])) {
+    $user_id = $_COOKIE['user_id'];
+
+    $sql_query = "SELECT * FROM user WHERE cust_id=$user_id";
+    $result = $database_connection->query($sql_query);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $logged_user_fname = $row['f_name'];
+        $logged_user_lname = $row['l_name'];
+    } else {
+       
+        $logged_user_fname = '';
+        $logged_user_lname = '';
+        
+    }
+} else {
+    
+    $logged_user_fname = '';
+    $logged_user_lname = '';
+    header('location:login.php?msg=Please login first');
+}
+
 $cover = $_POST[ 'covers' ];
 
 $Market_value = $_POST[ 'Market_value' ];
@@ -67,13 +90,16 @@ $_Covers_cal = $count*0.2;
 #Final Premium
 $F_premium = ( $Market_value_cal*$Year_cal*$Usage_cal*$_Covers_cal )+$tpty_cal;
 
+$Date= date("Y/m/d");
+$User=$logged_user_fname.' '.$logged_user_lname;
+
 if ( $cover == ''or $Market_value == ''or $Vehicle_number == ''or $Brand == ''or $Model == ''or $YOM == ''or $tpty == ''or $usage == '' ) {
 
     header( 'location:Quotations.php?msg=Please Fill All Fields' );
 
 } else {
 
-    $sql_query = "INSERT INTO quotations (brand,model,market_value,YOM,vehicle_number,tpty,covers,usage_purpose,f_premium) VALUES('$Brand','$Model','$Market_value','$YOM','$Vehicle_number','$tpty','$cover_value','$usage','$F_premium')";
+    $sql_query = "INSERT INTO quotations (brand,model,market_value,YOM,vehicle_number,tpty,covers,usage_purpose,f_premium,date,User) VALUES('$Brand','$Model','$Market_value','$YOM','$Vehicle_number','$tpty','$cover_value','$usage','$F_premium','$Date','$User')";
 
     if ( $database_connection->query( $sql_query ) === TRUE ) {
 
@@ -109,6 +135,7 @@ if ( $cover == ''or $Market_value == ''or $Vehicle_number == ''or $Brand == ''or
             array( 'Usage', $usage ),
             array( 'Covers', $cover_value ),
             array( 'Premium', $F_premium )
+            
         );
 
         // Set table column widths
@@ -121,7 +148,7 @@ if ( $cover == ''or $Market_value == ''or $Vehicle_number == ''or $Brand == ''or
         }
 
         // Output the PDF file
-        $pdf->Output( 'quotation.pdf', 'I' );
+        $pdf->Output( 'quotation.pdf', 'D' );
 
     } else {
 

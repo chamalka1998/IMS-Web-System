@@ -74,6 +74,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Choose here :</h6>
                         <a class="collapse-item" href="Quotations.php">Create New</a>
+                        <a class="collapse-item" href="Quotation_list.php">Print Exists</a>
                     </div>
                 </div>
             </li>

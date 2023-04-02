@@ -48,35 +48,37 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">List of customers</h1>
-                    <p class="mb-4">Insurance company customers come from diverse backgrounds and have various insurance
-                        needs depending on their personal circumstances. Individuals, small business owners, large
-                        corporations, professionals, and property owners are some common types of customers. Overall,
-                        insurance customers seek financial protection and peace of mind in the event of unexpected
-                        events or emergencies.</p>
+                    <h1 class="h3 mb-2 text-gray-800">List of issued quotations</h1>
+                    <p class="mb-4">A vehicle insurance quotation is a document that provides an estimated cost of an insurance policy for a vehicle. It outlines the coverage options available and the premium costs associated with each option. A vehicle insurance quotation typically includes information such as the make and model of the vehicle, the level of coverage being requested, the driver's history, and any other relevant information that could impact the cost of the policy. This quotation is an important tool for individuals and businesses to compare different insurance options and make an informed decision about which policy best meets their needs and budget.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Customer table</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Quotation table</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Customer ID</th>
-                                            <th>Customer name</th>
-                                            <th>E mail</th>
+                                            <th>Quotation number</th>
+                                            <th>Vehicle number</th>
+                                            <th>Brand</th>
+                                            <th>YOM</th>
+                                            <th>Issued date</th>
+                                            <th>User</th>
                                             <th>Action</th>
 
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Customer ID</th>
-                                            <th>Customer name</th>
-                                            <th>E mail</th>
+                                            <th>Quotation number</th>
+                                            <th>Vehicle number</th>
+                                            <th>Brand</th>
+                                            <th>YOM</th>
+                                            <th>Issued date</th>
+                                            <th>User</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -85,7 +87,7 @@
 
                                         <?php
                                     
-                                    $sql_query="SELECT * FROM user";
+                                    $sql_query="SELECT * FROM quotations";
                                     $sql_query_result=$database_connection->query($sql_query);
 
                                     if ($sql_query_result->num_rows>0) {
@@ -93,23 +95,20 @@
                                         while ($data_row=$sql_query_result->fetch_assoc()) {
                                             ?>
                                         <tr>
-                                            <td><?php echo $data_row['cust_id']; ?></td>
-                                            <td><?php echo $data_row['f_name']." ".$data_row['l_name']; ?></td>
-                                            <td><?php echo $data_row['email']; ?></td>
+                                            <td><?php echo $data_row['quotation_number']; ?></td>
+                                            <td><?php echo $data_row['vehicle_number']; ?></td>
+                                            <td><?php echo $data_row['brand']; ?></td>
+                                            <td><?php echo $data_row['YOM']; ?></td>
+                                            <td><?php echo $data_row['date']; ?></td>
+                                            <td><?php echo $data_row['User']; ?></td>
+                                            
 
                                             <td>
 
-                                                <a href="update_user.php?user_id=<?php echo $data_row['cust_id'];?>"><button
+                                                <a href="Print_previous_quotation.php?quotation_number=<?php echo $data_row['quotation_number'];?>"><button
                                                         type="button" class="btn btn-success" data-toggle="button"
                                                         aria-pressed="false" autocomplete="off">
-                                                        Edit
-                                                    </button></a>
-
-
-                                                <a href="Delete_customer.php"><button type="button"
-                                                        class="btn btn-danger" data-toggle="button" aria-pressed="false"
-                                                        autocomplete="off">
-                                                        Delete
+                                                      Print
                                                     </button></a>
 
                                             </td>
@@ -117,7 +116,7 @@
                                         <?php
                                         }
                                     }else {
-                                        header( 'location:Customers_list.php?msg=Can`t find data' );
+                                        header( 'location:Quotation_list.php?msg=Can`t find data' );
                                     }
                                     
                                     ?>
