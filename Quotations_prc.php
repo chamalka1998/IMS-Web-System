@@ -77,39 +77,49 @@ if ( $cover == ''or $Market_value == ''or $Vehicle_number == ''or $Brand == ''or
 
     if ( $database_connection->query( $sql_query ) === TRUE ) {
 
-       
         // Create new PDF document
         $pdf = new TCPDF( PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false );
 
         // Set document metadata
-        $pdf->SetCreator( 'Your Name' );
-        $pdf->SetAuthor( 'Your Name' );
+        $pdf->SetCreator( 'IMS' );
+        $pdf->SetAuthor( 'IMS' );
         $pdf->SetTitle( 'Quotation' );
 
         // Add a page to the document
         $pdf->AddPage();
 
-        // Add content to the document
-        $pdf->SetFont( 'times', '', 12 );
-        $pdf->Write( 0, 'Vehicle Number: '.$Vehicle_number );
-        $pdf->Ln();
-        $pdf->Write( 0, 'Brand: '.$Brand );
-        $pdf->Ln();
-        $pdf->Write( 0, 'Model: '.$Model );
-        $pdf->Ln();
-        $pdf->Write( 0, 'Year of Manufacture: '.$YOM );
-        $pdf->Ln();
-        $pdf->Write( 0, 'Market Value: '.$Market_value );
-        $pdf->Ln();
-        $pdf->Write( 0, 'Third Party Liability: '.$tpty );
-        $pdf->Ln();
-        $pdf->Write( 0, 'Usage: '.$usage );
-        $pdf->Ln();
-        $pdf->Write( 0, 'Covers: '.$cover_value );
-        $pdf->Ln();
-        $pdf->Write( 0, 'Premium: '.$F_premium );
-        $pdf->Ln();
-        
+        // Set font styles and sizes
+        $pdf->SetFont( 'helvetica', 'B', 16 );
+        $pdf->SetTextColor( 0, 0, 0 );
+
+        // Add title to the document
+        $pdf->Cell( 0, 10, 'Quotation', 0, 1, 'C' );
+
+        // Set font styles and sizes
+        $pdf->SetFont( 'helvetica', '', 12 );
+
+        // Create an array of data for the table
+        $data = array(
+            array( 'Vehicle Number', $Vehicle_number ),
+            array( 'Brand', $Brand ),
+            array( 'Model', $Model ),
+            array( 'Year of Manufacture', $YOM ),
+            array( 'Market Value', $Market_value ),
+            array( 'Third Party Liability', $tpty ),
+            array( 'Usage', $usage ),
+            array( 'Covers', $cover_value ),
+            array( 'Premium', $F_premium )
+        );
+
+        // Set table column widths
+        $w = array( 60, 90 );
+
+        // Create table
+        foreach ( $data as $row ) {
+            $pdf->Cell( $w[ 0 ], 7, $row[ 0 ], 0 );
+            $pdf->Cell( $w[ 1 ], 7, $row[ 1 ], 0, 1 );
+        }
+
         // Output the PDF file
         $pdf->Output( 'quotation.pdf', 'I' );
 
