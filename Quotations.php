@@ -221,9 +221,9 @@
                                             <h5 class="card-title">Final Premium</h5>
                                             <p class="card-text">With supporting text below as a natural lead-in to
                                                 additional content.</p>
-                                                <button type="submit" class="btn btn-primary">Confirm & Proceed</button>
+                                            <button type="submit" class="btn btn-primary">Confirm & Proceed</button>
 
-                                            
+
                                         </div>
                                     </div>
 

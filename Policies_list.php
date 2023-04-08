@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Customer List</title>
+    <title>Policies List</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -48,7 +48,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">List of customers</h1>
+                    <h1 class="h3 mb-2 text-gray-800">List of policies</h1>
                     <p class="mb-4">Insurance company customers come from diverse backgrounds and have various insurance
                         needs depending on their personal circumstances. Individuals, small business owners, large
                         corporations, professionals, and property owners are some common types of customers. Overall,
@@ -58,25 +58,27 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Customer table</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Policies table</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Customer ID</th>
-                                            <th>Customer name</th>
-                                            <th>E mail</th>
+                                            <th>Policy number</th>
+                                            <th>Vehicle number</th>
+                                            <th>Policy type</th>
+                                            <th>Issued date</th>
                                             <th>Action</th>
 
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Customer ID</th>
-                                            <th>Customer name</th>
-                                            <th>E mail</th>
+                                            <th>Policy number</th>
+                                            <th>Vehicle number</th>
+                                            <th>Policy type</th>
+                                            <th>Issued date</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -85,7 +87,7 @@
 
                                         <?php
                                     
-                                    $sql_query="SELECT * FROM user";
+                                    $sql_query="SELECT * FROM policy";
                                     $sql_query_result=$database_connection->query($sql_query);
 
                                     if ($sql_query_result->num_rows>0) {
@@ -93,9 +95,10 @@
                                         while ($data_row=$sql_query_result->fetch_assoc()) {
                                             ?>
                                         <tr>
-                                            <td><?php echo $data_row['cust_id']; ?></td>
-                                            <td><?php echo $data_row['f_name']." ".$data_row['l_name']; ?></td>
-                                            <td><?php echo $data_row['email']; ?></td>
+                                            <td><?php echo $data_row['policy_number']; ?></td>
+                                            <td><?php echo $data_row['vehicle_number']; ?></td>
+                                            <td><?php echo $data_row['policy_type']; ?></td>
+                                            <td><?php echo $data_row['issued_date']; ?></td>
 
                                             <td>
 
@@ -104,16 +107,6 @@
                                                         aria-pressed="false" autocomplete="off">
                                                         Edit
                                                     </button></a>
-
-
-                                                <a
-                                                    href="Delete_customer.php?user_id=<?php echo $data_row['cust_id'];?>"><button
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal" class="btn btn-danger"
-                                                        aria-pressed="false" autocomplete="off">
-                                                        Delete
-                                                    </button></a>
-
 
                                             </td>
                                         </tr>

@@ -9,17 +9,13 @@ $third_pty=$_POST['third_pty'];
 $usage=$_POST['usage'];
 $cover_value=implode(",",$cover);
 
-echo $policy_type;
-echo $vehicle_number;
-echo $third_pty;
-echo $usage;
-echo $cover_value;
 
+$Date= date("Y/m/d");
 
 #foreach ($cover as $covers){ 
 #    echo $covers."<br />";
 #}
-$sql_query="INSERT INTO policy (policy_type,tpty,vehicle_number,covers,usage_purpose) VALUES('$policy_type','$third_pty','$vehicle_number','$cover_value','$usage')";
+$sql_query="INSERT INTO policy (policy_type,tpty,vehicle_number,covers,usage_purpose,issued_date) VALUES('$policy_type','$third_pty','$vehicle_number','$cover_value','$usage','$Date')";
 
 if($database_connection->query($sql_query)===TRUE){
     
